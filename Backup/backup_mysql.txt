@@ -1,0 +1,47 @@
+USE Studen;
+
+-- Tabel Mahasiswa
+CREATE TABLE students (
+    studentID INT AUTO_INCREMENT PRIMARY KEY,
+    cardID VARCHAR(50) NOT NULL,
+    NIM VARCHAR(20) NOT NULL UNIQUE,
+    name VARCHAR(100) NOT NULL,
+    studiProgram VARCHAR(100) NOT NULL
+);
+
+-- Tabel Dosen
+CREATE TABLE lecturers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_card VARCHAR(50) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    nidn VARCHAR(20) NOT NULL,
+    expertise VARCHAR(100) NOT NULL
+);
+
+-- Tabel Mata Kuliah
+CREATE TABLE courses (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(20) UNIQUE,
+    name VARCHAR(50) NOT NULL,
+    sks INT NOT NULL,
+    semester INT NOT NULL,
+    created_at DATE NULL,
+    updated_at DATE NULL
+);
+
+-- Tabel KRS (relasi Mahasiswa + Matakuliah + Dosen)
+CREATE TABLE krs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_nim VARCHAR(20) NOT NULL,
+    course_id INT NOT NULL,
+    lecturer_id INT NOT NULL,
+    semester INT NOT NULL,
+    nilai_sikap INT NOT NULL,
+    nilai_uts INT NOT NULL,
+    nilai_uas INT NOT NULL,
+    score DOUBLE NOT NULL,
+    grade VARCHAR(2) NOT NULL,
+    FOREIGN KEY (student_nim) REFERENCES students(NIM),
+    FOREIGN KEY (course_id) REFERENCES courses(id),
+    FOREIGN KEY (lecturer_id) REFERENCES lecturers(id)
+);
